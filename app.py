@@ -14,12 +14,9 @@ st.set_page_config(
 # ===== CUSTOM CSS =====
 st.markdown("""
 <style>
-    /* Main background */
     .stApp {
         background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%);
     }
-    
-    /* Hero title */
     .hero-title {
         font-size: 3.5rem;
         font-weight: 900;
@@ -30,8 +27,6 @@ st.markdown("""
         padding: 10px 0;
         letter-spacing: 2px;
     }
-    
-    /* Subtitle */
     .hero-subtitle {
         text-align: center;
         color: #9d7fd4;
@@ -39,24 +34,12 @@ st.markdown("""
         margin-bottom: 10px;
         letter-spacing: 1px;
     }
-
-    /* Badge */
     .badge {
         text-align: center;
-        margin-bottom: 30px;
+        color: #ffd700;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
     }
-
-    /* Dashboard card */
-    .dash-card {
-        background: linear-gradient(135deg, #1e0a3c, #2d1458);
-        border: 1px solid #ffd70033;
-        border-radius: 16px;
-        padding: 20px;
-        margin: 8px 0;
-        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
-    }
-
-    /* Result cards */
     .result-phishing {
         background: linear-gradient(135deg, #8b0000, #ff0000);
         border: 2px solid #ff6b6b;
@@ -69,9 +52,7 @@ st.markdown("""
         margin: 20px 0;
         box-shadow: 0 0 40px rgba(255, 0, 0, 0.5);
         letter-spacing: 2px;
-        animation: pulse 1s infinite;
     }
-
     .result-safe {
         background: linear-gradient(135deg, #004d00, #00cc00);
         border: 2px solid #00ff00;
@@ -85,19 +66,23 @@ st.markdown("""
         box-shadow: 0 0 40px rgba(0, 255, 0, 0.3);
         letter-spacing: 2px;
     }
-
-    /* Section headers */
     .section-header {
         color: #ffd700;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 700;
         border-bottom: 1px solid #ffd70033;
         padding-bottom: 8px;
         margin-bottom: 15px;
         letter-spacing: 1px;
     }
-
-    /* Threat level */
+    .info-panel {
+        background: linear-gradient(135deg, #1e0a3c, #2d1458);
+        border: 1px solid #ffd70033;
+        border-radius: 16px;
+        padding: 15px;
+        height: 100%;
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.05);
+    }
     .threat-high {
         background: linear-gradient(90deg, #8b0000, #ff0000);
         color: white;
@@ -106,7 +91,14 @@ st.markdown("""
         font-weight: bold;
         display: inline-block;
     }
-
+    .threat-medium {
+        background: linear-gradient(90deg, #7b6000, #ffd700);
+        color: black;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        display: inline-block;
+    }
     .threat-low {
         background: linear-gradient(90deg, #004d00, #00cc00);
         color: white;
@@ -115,8 +107,6 @@ st.markdown("""
         font-weight: bold;
         display: inline-block;
     }
-
-    /* Footer */
     .footer {
         text-align: center;
         color: #9d7fd4;
@@ -125,16 +115,6 @@ st.markdown("""
         border-top: 1px solid #ffd70022;
         margin-top: 30px;
     }
-
-    /* Input area styling */
-    .stTextArea textarea {
-        background: #1e0a3c !important;
-        border: 1px solid #ffd70055 !important;
-        color: white !important;
-        border-radius: 12px !important;
-    }
-
-    /* Button styling */
     .stButton button {
         background: linear-gradient(90deg, #ffd700, #ff8c00) !important;
         color: black !important;
@@ -143,15 +123,14 @@ st.markdown("""
         border-radius: 12px !important;
         font-size: 1.1rem !important;
         letter-spacing: 1px !important;
-        padding: 15px !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# ===== HERO SECTION =====
-st.markdown('<div class="hero-title">🛡️ PHISHGUARD AI</div>', 
+# ===== HERO =====
+st.markdown('<div class="hero-title">🛡️ PHISHGUARD AI</div>',
             unsafe_allow_html=True)
-st.markdown('<div class="hero-subtitle">Advanced AI-Powered Phishing Email Detection System</div>', 
+st.markdown('<div class="hero-subtitle">Advanced AI-Powered Phishing Email Detection System</div>',
             unsafe_allow_html=True)
 st.markdown('<div class="badge">⚡ Powered by NLP & Machine Learning • 96.68% Accuracy</div>',
             unsafe_allow_html=True)
@@ -159,7 +138,7 @@ st.markdown('<div class="badge">⚡ Powered by NLP & Machine Learning • 96.68%
 st.markdown("---")
 
 # ===== TOP DASHBOARD METRICS =====
-st.markdown('<p class="section-header">📊 SYSTEM DASHBOARD</p>', 
+st.markdown('<p class="section-header">📊 SYSTEM DASHBOARD</p>',
             unsafe_allow_html=True)
 
 col1, col2, col3, col4, col5 = st.columns(5)
@@ -182,28 +161,17 @@ with st.spinner("🔄 Initializing PhishGuard AI..."):
     model, tfidf = load_model()
 
 st.success("✅ PhishGuard AI System Online!")
-
 st.markdown("---")
 
-# ===== MAIN DASHBOARD =====
-left, right = st.columns([3, 2])
+# ===== INFO PANELS — HORIZONTAL ON TOP =====
+st.markdown('<p class="section-header">📚 SYSTEM INFORMATION</p>',
+            unsafe_allow_html=True)
 
-with left:
-    st.markdown('<p class="section-header">📧 EMAIL ANALYSIS CONSOLE</p>',
-                unsafe_allow_html=True)
-    
-    email_input = st.text_area(
-        "Paste suspicious email content below:",
-        height=280,
-        placeholder="Paste email content here for instant AI analysis...\n\nExample: Dear Customer, Your account has been suspended..."
-    )
-    
-    analyze_btn = st.button("🔍 ANALYZE EMAIL NOW", use_container_width=True)
+col1, col2, col3 = st.columns(3)
 
-with right:
-    st.markdown('<p class="section-header">🏆 MODEL COMPARISON</p>',
-                unsafe_allow_html=True)
-    
+with col1:
+    st.markdown('<div class="info-panel">', unsafe_allow_html=True)
+    st.markdown("#### 🏆 Model Comparison")
     st.markdown("""
     | Rank | Model | Accuracy |
     |------|-------|----------|
@@ -212,32 +180,47 @@ with right:
     | 🥉 | Random Forest | 95.76% |
     | 4th | Naive Bayes | 95.52% |
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("---")
-    
-    st.markdown('<p class="section-header">🔬 HOW IT WORKS</p>',
-                unsafe_allow_html=True)
-    
+with col2:
+    st.markdown('<div class="info-panel">', unsafe_allow_html=True)
+    st.markdown("#### 🔬 How It Works")
     st.markdown("""
-    **1.** 📝 Email text is cleaned & normalized  
-    **2.** 🔢 TF-IDF converts text to 5,000 features  
-    **3.** 🧠 AI model analyzes word patterns  
+    **1.** 📝 Email text cleaned & normalized  
+    **2.** 🔢 TF-IDF → 5,000 features  
+    **3.** 🧠 AI analyzes word patterns  
     **4.** 🎯 Instant phishing/safe verdict  
     **5.** 📊 Confidence score displayed  
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("---")
-
-    st.markdown('<p class="section-header">⚠️ COMMON PHISHING SIGNS</p>',
-                unsafe_allow_html=True)
-    
+with col3:
+    st.markdown('<div class="info-panel">', unsafe_allow_html=True)
+    st.markdown("#### ⚠️ Common Phishing Signs")
     st.markdown("""
     🔴 Urgent account warnings  
     🔴 "Click here immediately"  
     🔴 Suspicious URLs/links  
     🔴 Request for credentials  
     🔴 Too-good-to-be-true offers  
+    🔴 Unknown sender domains  
+    🔴 Spelling/grammar errors  
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown("---")
+
+# ===== EMAIL INPUT =====
+st.markdown('<p class="section-header">📧 EMAIL ANALYSIS CONSOLE</p>',
+            unsafe_allow_html=True)
+
+email_input = st.text_area(
+    "Paste suspicious email content below:",
+    height=200,
+    placeholder="Paste email content here for instant AI analysis...\n\nExample: Dear Customer, Your account has been suspended. Click here immediately..."
+)
+
+analyze_btn = st.button("🔍 ANALYZE EMAIL NOW", use_container_width=True)
 
 # ===== RESULTS =====
 if analyze_btn:
@@ -274,32 +257,31 @@ if analyze_btn:
                 unsafe_allow_html=True
             )
 
-        # Results dashboard
+        # Results metrics
         col1, col2, col3, col4 = st.columns(4)
-        col1.metric("🛡️ Verdict", 
-                    "PHISHING" if prediction == 1 else "SAFE")
-        col2.metric("✅ Safe Score", 
+        col1.metric("🛡️ Verdict",
+                    "PHISHING ⚠️" if prediction == 1 else "SAFE ✅")
+        col2.metric("✅ Safe Score",
                     f"{probability[0]*100:.1f}%")
-        col3.metric("🚨 Threat Score", 
+        col3.metric("🚨 Threat Score",
                     f"{probability[1]*100:.1f}%")
-        col4.metric("🎯 Confidence", 
+        col4.metric("🎯 Confidence",
                     f"{max(probability)*100:.1f}%")
 
         # Threat level
         st.markdown("### 🌡️ Threat Level")
         threat = probability[1] * 100
-        
+
         if threat >= 80:
-            st.markdown('<span class="threat-high">🔴 HIGH THREAT</span>', 
+            st.markdown('<span class="threat-high">🔴 HIGH THREAT — Immediate Action Required!</span>',
                        unsafe_allow_html=True)
         elif threat >= 50:
-            st.markdown('<span class="threat-high">🟡 MEDIUM THREAT</span>', 
+            st.markdown('<span class="threat-medium">🟡 MEDIUM THREAT — Exercise Caution</span>',
                        unsafe_allow_html=True)
         else:
-            st.markdown('<span class="threat-low">🟢 LOW THREAT</span>', 
+            st.markdown('<span class="threat-low">🟢 LOW THREAT — Email Appears Safe</span>',
                        unsafe_allow_html=True)
 
-        # Progress bars
         st.markdown("### 📊 Probability Breakdown")
         col1, col2 = st.columns(2)
         with col1:
@@ -310,7 +292,7 @@ if analyze_btn:
             st.progress(float(probability[1]))
 
         # Recommendation
-        st.markdown("### 💡 Recommendation")
+        st.markdown("### 💡 Security Recommendation")
         if prediction == 1:
             st.error("""
             🚨 **DO NOT** click any links in this email  
