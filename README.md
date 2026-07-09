@@ -155,11 +155,7 @@ python -m streamlit run app.py
 
 ## 👩‍💻 Author
 
-**Shreya G Amin**
-2nd Year B.Tech Computer Science
-NMAM Institute of Technology, Nitte
+**Shreya G Amin**  
+B.Tech Computer Science   
+NMAM Institute of Technology, Nitte  
 
----
-
-## 📄 License
-MIT License
