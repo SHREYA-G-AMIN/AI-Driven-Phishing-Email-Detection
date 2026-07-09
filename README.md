@@ -5,7 +5,7 @@ An AI-powered phishing email detection system built using NLP and Machine Learni
 ---
 
 ## 🌐 Live Demo
-[Click here to try PhishGuard AI](https://ai-driven-phishing-email-detection.streamlit.app/) ← Replace with your Streamlit link
+[Click here to try PhishGuard AI](https://ai-driven-phishing-email-detection.streamlit.app/) 
 
 ---
 
